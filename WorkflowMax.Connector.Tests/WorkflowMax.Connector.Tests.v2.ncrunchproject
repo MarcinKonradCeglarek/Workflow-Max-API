@@ -28,5 +28,11 @@
     <NamedTestSelector>
       <TestName>WorkflowMax.Connector.Tests.ConnectorTests.CreateAndDeleteClient</TestName>
     </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>WorkflowMax.Connector.Tests.ConnectorTests.DeleteAllAdditionalClients</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>WorkflowMax.Connector.Tests.ConnectorTests.GetCategoriesList</TestName>
+    </NamedTestSelector>
   </IgnoredTests>
 </ProjectConfiguration>

@@ -8,21 +8,7 @@
 
     using WorkflowMax.Connector.Dto;
     using WorkflowMax.Connector.ValueObjects;
-
-    public interface IClient
-    {
-        Task<Client> Add(Client client);
-
-        Task<Client> Archive(int id);
-
-        Task<bool> Delete(int id);
-
-        Task<Client> GetById(int id);
-
-        Task<IEnumerable<Client>> GetList();
-
-        Task<Client> Update(Client client);
-    }
+    using WorkflowMax.Model;
 
     public class ClientWrapper : IClient
     {
@@ -46,7 +32,7 @@
 
             var responsePayload = await createResponse.Content.ReadAsStringAsync();
             var response = ResponseParser.Deserialize<ClientResponse>(responsePayload);
-            return new Client(response.Client);
+            return response.Client.ConvertToClient();
         }
 
         public async Task<Client> Archive(int id)
@@ -63,7 +49,7 @@
 
             var responsePayload = await archiveResponse.Content.ReadAsStringAsync();
             var response = ResponseParser.Deserialize<ClientResponse>(responsePayload);
-            return new Client(response.Client);
+            return response.Client.ConvertToClient();
         }
 
         public async Task<bool> Delete(int id)
@@ -86,7 +72,7 @@
 
             var responsePayload = await getResponse.Content.ReadAsStringAsync();
             var response = ResponseParser.Deserialize<ClientResponse>(responsePayload);
-            return new Client(response.Client);
+            return response.Client.ConvertToClient();
         }
 
         public async Task<IEnumerable<Client>> GetList()
@@ -99,12 +85,12 @@
 
             var responsePayload = await listResponse.Content.ReadAsStringAsync();
             var response = ResponseParser.Deserialize<ClientsResponse>(responsePayload);
-            return response.Clients.Select(c => new Client(c));
+            return response.Clients.Select(c => c.ConvertToClient());
         }
 
         public async Task<Client> Update(Client client)
         {
-            var xml = ResponseParser.Serialize(client.ToXmlClient());
+            var xml = ResponseParser.Serialize(new XmlClient(client));
             var updateRequestContent = new StringContent(xml);
             var updateResponse = await this.Connector.Put("/client.api/update", updateRequestContent);
 
@@ -115,7 +101,7 @@
 
             var responsePayload = await updateResponse.Content.ReadAsStringAsync();
             var response = ResponseParser.Deserialize<ClientResponse>(responsePayload);
-            return new Client(response.Client);
+            return response.Client.ConvertToClient();
         }
     }
 }

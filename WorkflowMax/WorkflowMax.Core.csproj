@@ -40,6 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\ClientBuilder.cs" />
+    <Compile Include="IClient.cs" />
+    <Compile Include="Model\AddressValueObject.cs" />
+    <Compile Include="Model\Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
